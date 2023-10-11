@@ -1,0 +1,52 @@
+expectations of the company: we can do HIL test with FORCE simulator.
+That is the minimum goal, if opportunity also test on vessel.
+
+Should we design for a type of vessel? U to lorenzo but
+we have only models of large vessels with different propulsion.
+We can botoh make a system for a propulsion or that adapts to it?
+
+What knowledge frmom Emri can we expect? not defined yet
+
+The project can do btoh control and thrust allocation or only control.
+
+adptation doesnt happn at the thrust allocation, that is only a model
+if necessary, they can provide their models for thrust allocation
+
+whatever is done will work n simulink and matlab. EG cannot run
+LQR online. Will investugate later.
+
+knowledge of vessel dynamics: is there a bare minum of knowledge EMRI
+has acces to? Lieke tonnage or size? There i knowledge but depends.
+Thomas will compi.e a list of known ifnormation
+
+Is there prefeerence form the company for control methods? No bounds.
+They see this as a tool to explore new possibilities.
+The investigation has value as well, besides the solution.
+
+Should we assume the navigation system is available? Should we pursue estimation
+of position and velocity? Initially, we will assume they are available, then we
+will see. Velocity and position available at desired freq, acceleration no.
+
+Different sols with/without acce feedback can be explored.
+
+We will need to discover the resctrictions and requirements for 
+the controller. EG right now for cruise vessels it doesnt matter much, 
+the constraints are like noise levels. For smaller ships they might change.
+
+GPS, speeds, rate of turn and heading will be available. Acceleration might
+not be available because IMUs are not standard on these ships.
+
+important to keep a rolling doc before meeetings with achievements, issues and problems. 
+Write down also equations and importnat points from reaf papers. Also weekly meetings.
+
+Within the first month i have to deliver the projec tplan
+Better to have it for the first 2,5 weeks.
+It is where i descrober the needed work to meet the scope of the project and build timeline as a gantt chart.
+It will be reviewed by the supervisors. 
+At the end of the thesis i will have to subimit a revised plan with alteations as sort of self-reflection.
+
+no monday 10-11, no thursday 10-11, no fridays for thomas and in general before 14.
+
+
+
+
