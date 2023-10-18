@@ -1,0 +1,71 @@
+function [xdot, U] = cruise(x, tau)
+
+% nu = [u, v, r]';
+% eta = [N, E, psi];
+% x = [N, E, psi, u, v, r, bN, bE, bPSI]';
+m = 85619e3;
+xg = 0;
+Iz = 0.1278;
+rho = 1e3;
+L = 292.5;
+b = L;
+a = 32.2;
+
+% taken from 
+% http://brennen.caltech.edu/fluidbook/basicfluiddynamics/unsteadyflows/addedmass/valuesoftheaddedmass.pdf
+% based on the fact that M11 = Xud = A11(0),  M22 = Yvd = A22(0), 
+% M26= Yrd = A26(0), M66 = Nrd = A66(0),
+% based also on Fossen,
+% file:///C:/Users/X20/OneDrive%20-%20Danmarks%20Tekniske%20Universitet/Materiale%20DTU/Thesis/Papers/Handbook%20of%20Marine%20Craft%20Hydrodynamics%20and%20Motion%20Control%20-%202011%20-%20Fossen.pdf, at page 142.
+Xud = rho*pi*b^2;
+Yvd = rho*pi*a^2;
+Yrd = 0;
+Nrd = 0;
+
+Xu = 1e6;
+Yv = 1e6;
+Yr = 1e6;
+Nv = 1e6;
+Nr = 1e6;
+
+psi = x(3);
+rotmat = [cos(psi), -sin(psi), 0; 
+          sin(psi),  cos(psi), 0;
+                 0,         0, 1];
+
+%etap = rotmat * x(1:3);
+
+M = [m,    0,    0;
+     0,    m, m*xg;
+     0, m*xg,   Iz];
+Madd = [-Xud,    0,    0;
+           0, -Yvd, -Yrd;
+           0, -Yrd, -Nrd];
+Mtot = M - Madd;
+
+D = [-Xu,   0,   0;
+       0, -Yv, -Yr;
+       0, -Nv, -Nr];
+
+% x = zeros(simsteps, 7);
+% xdot = zeros(simsteps, 7);
+
+xdot = zeros(1,9);
+xdot(1:3) = x(4:6);
+xdot(4:6) = inv(Mtot) * (rotmat * x(7:9) + tau - D * x(4:6));
+xdot(7:9) = 0;
+xdot = xdot';
+
+%{
+for i = 2:simsteps
+    xdot(i, 1:3) = x(i-1, 4:6);
+    xdot(i, 4:6) = (rotmat * x(7) + tau - D * x(4:6)) * 1/M;
+    xdot(i, 7) = 0;
+
+    x(i, :) = euler2dc(xdot);
+    eta_std = inv(rotmat(x(i, 3))) * x(i, 1:3);
+end
+%}
+
+U = sqrt(x(4)^2 + x(5)^2);
+end
