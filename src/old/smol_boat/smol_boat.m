@@ -54,8 +54,8 @@ Ak = A-B*K;
 cl_poles = eig(Ak);
 x = zeros(n_states, simsize);
 u = zeros(n_inputs, simsize);
-x(1,1) = 10
-ref = [0, 0, 0,0,0,0]
+x(1,1) = 10;
+ref = [0, 0, 0,0,0,0];
 for i = 2:simsize
     u(:,i-1) = -K*(x(:,i-1)-ref');
     xdot = A*x(:,i-1) + B * u(:,i-1) + Bv * bias;
@@ -77,14 +77,14 @@ subplot(313), plot(time, u(3,:))
 n_aug = 3;
 Aa = [A, Bv; zeros(3, 6), z33];
 Ba = [B;z33]; Ca = [C, z33];
-
+rank(obsv(Aa, Ca))
 lambda_obs = [3.*cl_poles' -1 -2 -3];
 L = place(Aa', Ca', lambda_obs)';
 
 xhat_0 = zeros(n_states+n_aug,1);
 x0 = zeros(n_states,1);
 u = zeros(n_inputs,1);
-sim("biasest.slx")
+sim("biasest_smol.slx")
 
 states = logsout{2}.Values.Data';
 states_hat = logsout{1}.Values.Data';

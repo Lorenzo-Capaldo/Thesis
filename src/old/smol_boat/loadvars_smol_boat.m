@@ -62,5 +62,5 @@ Athrust = -[1/Tsurge,       0,      0;
                    0, 1/Tsway,      0;
                    0,       0, 1/Tyaw];
 
-ocean_currents_coeffs = 1/2*rho.*[b*draft; a*draft; a*draft*b];
+ocean_currents_coeffs = 1/2*rho.*[a*draft; b*draft; a*draft*b];
 end
